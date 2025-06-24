@@ -20,7 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'google_id'
+        'google_id',
+        'role'
     ];
 
     /**
@@ -44,5 +45,29 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if user has specific role
+     */
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
+    /**
+     * Check if user is admin or super-admin
+     */
+    public function isAdmin()
+    {
+        return in_array($this->role, ['admin', 'super-admin']);
+    }
+
+    /**
+     * Check if user is super-admin
+     */
+    public function isSuperAdmin()
+    {
+        return $this->role === 'super-admin';
     }
 }
